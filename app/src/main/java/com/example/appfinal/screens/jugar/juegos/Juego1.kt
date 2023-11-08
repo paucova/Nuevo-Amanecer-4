@@ -129,8 +129,8 @@ fun addNewImages(images: MutableList<DraggableImage>, imageCount: Int) {
     images.clear()
 
     for (id in 1..imageCount) {
-        val xOffset = Random.nextInt(100, 1300)
-        val yOffset = Random.nextInt(100, 1500)
+        val xOffset = Random.nextInt(100, 1500)
+        val yOffset = Random.nextInt(100, 1000)
         val color = Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f)
         val radius = Random.nextInt(150, 200) // Radio aleatorio para los círculos
         val isVisible = true
@@ -168,8 +168,8 @@ fun generateImages(): MutableList<DraggableImage> {
     val images = mutableListOf<DraggableImage>()
 
     for (id in 1..10) {
-        val xOffset = Random.nextInt(100, 1300)
-        val yOffset = Random.nextInt(100, 1500)
+        val xOffset = Random.nextInt(100, 2000)
+        val yOffset = Random.nextInt(100, 1000)
         val color = Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f)
         val radius = Random.nextInt(150, 200)
 
