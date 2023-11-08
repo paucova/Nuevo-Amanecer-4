@@ -32,14 +32,14 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import kotlin.random.Random
 
-
 @Composable
 fun Juego3(navController: NavHostController) {
     val azulClaro = Color(173, 216, 230)
     var images by remember { mutableStateOf(generateImages3()) }
-    var visibleImages by remember { mutableStateOf(images.filter { it.isVisible }) }
+    var visibleImages by remember { mutableStateOf(listOf<DraggableImage3>()) }
     var deletedImages by remember { mutableStateOf(mutableListOf<DraggableImage3>()) }
     var deletedImageCount by remember { mutableStateOf(0) }
+    var currentNumber by remember { mutableStateOf(1) }
 
     Box(
         modifier = Modifier
@@ -56,7 +56,7 @@ fun Juego3(navController: NavHostController) {
                 }
             },
             modifier = Modifier
-                .align(Alignment.TopEnd) // Cambiado a Alignment.TopEnd
+                .align(Alignment.TopEnd)
                 .padding(8.dp),
             contentPadding = PaddingValues(8.dp)
         ) {
@@ -79,7 +79,7 @@ fun Juego3(navController: NavHostController) {
         Text(
             text = "Número de imágenes visibles: ${visibleImages.size}",
             modifier = Modifier
-                .align(Alignment.TopStart) // Mantenido como Alignment.TopStart
+                .align(Alignment.TopStart)
                 .padding(16.dp)
                 .then(Modifier.fillMaxWidth()),
             fontSize = 20.sp
@@ -88,54 +88,65 @@ fun Juego3(navController: NavHostController) {
         Text(
             text = "Número de imágenes eliminadas: $deletedImageCount",
             modifier = Modifier
-                .align(Alignment.TopStart) // Mantenido como Alignment.TopStart
+                .align(Alignment.TopStart)
                 .padding(top = 48.dp, start = 16.dp)
                 .then(Modifier.fillMaxWidth()),
             fontSize = 20.sp
         )
 
         if (visibleImages.isNotEmpty()) {
-            visibleImages.forEach { image ->
+            val sortedImages = visibleImages.sortedBy { it.number }
+            sortedImages.forEach { image ->
                 DraggableImage3(image = image) {
-                    deletedImages.add(image)
-                    deletedImageCount++
-                    visibleImages = visibleImages.filter { it != image }
+                    if (image.number == currentNumber) {
+                        deletedImages.add(image)
+                        deletedImageCount++
+                        visibleImages = visibleImages.filter { it != image }
+                        currentNumber++
+                    }
                 }
             }
         } else {
-            val randomImageCount = Random.nextInt(1, 11) // Genera un número aleatorio entre 1 y 20
+            currentNumber = 1 // Restablecer el número actual a 1
+            val randomImageCount = Random.nextInt(1, 11)
             addNewImages3(images, randomImageCount)
-            visibleImages = images
+            visibleImages = images.sortedBy { it.number }
         }
     }
 }
-
 
 data class DraggableImage3(
     val id: Int,
     var offset: IntOffset,
     val color: Color,
     val radius: Int,
-    var isVisible: Boolean = true
+    var isVisible: Boolean = true,
+    val number: Int
 )
 
 fun addNewImages3(images: MutableList<DraggableImage3>, imageCount: Int) {
     images.clear()
 
+    val numbers = (1..imageCount).shuffled() // Lista de números aleatorios
+    val usedNumbers = mutableSetOf<Int>()
+
     for (id in 1..imageCount) {
         val xOffset = Random.nextInt(100, 1500)
         val yOffset = Random.nextInt(100, 1000)
         val color = Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f)
-        val radius = Random.nextInt(150, 200) // Radio aleatorio para los círculos
-        val isVisible = true
+        val radius = Random.nextInt(150, 200)
+
+        val number = numbers.first { it !in usedNumbers } // Obtener el próximo número no utilizado
+        usedNumbers.add(number)
 
         images.add(
             DraggableImage3(
-                id = images.size + 1,
+                id = id,
                 offset = IntOffset(xOffset, yOffset),
                 color = color,
                 radius = radius,
-                isVisible = isVisible
+                isVisible = true,
+                number = number
             )
         )
     }
@@ -156,7 +167,7 @@ fun DraggableImage3(image: DraggableImage3, onDeleteClick: () -> Unit) {
     ) {
         // Agrega el contenido de la imagen aquí, si es necesario
         Text(
-            text = image.id.toString(), // Muestra el número de imagen en el círculo
+            text = image.number.toString(),
             color = Color.White,
             fontWeight = FontWeight.Bold,
             fontSize = 20.sp,
@@ -179,7 +190,8 @@ fun generateImages3(): MutableList<DraggableImage3> {
                 id = id,
                 offset = IntOffset(xOffset, yOffset),
                 color = color,
-                radius = radius
+                radius = radius,
+                number = id
             )
         )
     }
