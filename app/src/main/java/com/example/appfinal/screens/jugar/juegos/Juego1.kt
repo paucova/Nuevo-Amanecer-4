@@ -60,6 +60,7 @@ fun Juego1 (navController: NavHostController){
                 }
             },
             modifier = Modifier
+                .align(Alignment.TopEnd) // Cambiado a Alignment.TopEnd
                 .padding(8.dp),
             contentPadding = PaddingValues(8.dp)
         ) {
@@ -76,14 +77,13 @@ fun Juego1 (navController: NavHostController){
             )
         }
 
-
         Box(
             modifier = Modifier.fillMaxSize(),
         ) {
             Text(
                 text = "Número de imágenes visibles: ${visibleImages.size}",
                 modifier = Modifier
-                    .align(Alignment.TopStart) // Cambiado a Alignment.TopStart
+                    .align(Alignment.TopStart) // Mantenido como Alignment.TopStart
                     .padding(16.dp)
                     .then(Modifier.fillMaxWidth()),
                 fontSize = 20.sp
@@ -92,7 +92,7 @@ fun Juego1 (navController: NavHostController){
             Text(
                 text = "Número de imágenes eliminadas: $deletedImageCount",
                 modifier = Modifier
-                    .align(Alignment.TopStart) // Cambiado a Alignment.TopStart
+                    .align(Alignment.TopStart) // Mantenido como Alignment.TopStart
                     .padding(top = 48.dp, start = 16.dp)
                     .then(Modifier.fillMaxWidth()),
                 fontSize = 20.sp
