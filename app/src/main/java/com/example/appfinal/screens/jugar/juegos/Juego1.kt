@@ -29,11 +29,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
-
 import kotlin.random.Random
-
-
-
 import androidx.compose.ui.unit.sp
 
 @Composable
@@ -60,7 +56,6 @@ fun Juego1 (navController: NavHostController){
                 }
             },
             modifier = Modifier
-                .align(Alignment.TopEnd) // Cambiado a Alignment.TopEnd
                 .padding(8.dp),
             contentPadding = PaddingValues(8.dp)
         ) {
@@ -77,27 +72,27 @@ fun Juego1 (navController: NavHostController){
             )
         }
 
-        Box(
-            modifier = Modifier.fillMaxSize(),
+        Column (
+            modifier = Modifier
+                .padding(16.dp)
+                .align(Alignment.TopEnd)
         ) {
             Text(
                 text = "Número de imágenes visibles: ${visibleImages.size}",
-                modifier = Modifier
-                    .align(Alignment.TopStart) // Mantenido como Alignment.TopStart
-                    .padding(16.dp)
-                    .then(Modifier.fillMaxWidth()),
-                fontSize = 20.sp
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
             )
 
             Text(
                 text = "Número de imágenes eliminadas: $deletedImageCount",
-                modifier = Modifier
-                    .align(Alignment.TopStart) // Mantenido como Alignment.TopStart
-                    .padding(top = 48.dp, start = 16.dp)
-                    .then(Modifier.fillMaxWidth()),
-                fontSize = 20.sp
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
             )
+        }
 
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
             if (visibleImages.isNotEmpty()) {
                 visibleImages.forEach { image ->
                     DraggableImage(image = image) {
@@ -114,8 +109,6 @@ fun Juego1 (navController: NavHostController){
         }
     }
 }
-
-
 
 data class DraggableImage(
     val id: Int,
