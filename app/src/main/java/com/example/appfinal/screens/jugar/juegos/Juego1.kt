@@ -41,11 +41,6 @@ import com.example.appfinal.screens.jugar.juegos.juego4.generateImages3
 @Composable
 fun Juego1(navController: NavHostController) {
     val azulClaro = Color(173, 216, 230)
-    var images by remember { mutableStateOf(generateImages3()) }
-    var visibleImages by remember { mutableStateOf(listOf<DraggableImage3>()) }
-    var deletedImages by remember { mutableStateOf(mutableListOf<DraggableImage3>()) }
-    var deletedImageCount by remember { mutableStateOf(0) }
-    var currentNumber by remember { mutableStateOf(1) }
 
     Box(
 
