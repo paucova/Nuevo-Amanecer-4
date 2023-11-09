@@ -34,42 +34,15 @@ import androidx.navigation.NavHostController
 import kotlin.random.Random
 
 
+
 @Composable
-fun Juego2(navController: NavHostController) {
+fun Juego2 (navController: NavHostController){
+    // Establecer el fondo azul claro
     val azulClaro = Color(173, 216, 230)
-    val images = remember { mutableStateOf(generateImages2()) }
-    val deletedImages = remember { mutableStateOf(mutableListOf<DraggableImage2>()) }
-    val deletedImageCount = remember { mutableStateOf(0) }
-    val colorObjetivo = remember { mutableStateOf(generateRandomColor(images.value)) } // Color que se debe eliminar
-
-    fun selectNewColorObjective() {
-        if (images.value.isNotEmpty()) {
-            colorObjetivo.value = generateRandomColor(images.value)
-        } else {
-            // No quedan círculos, fin del juego o reinicio
-            // Puedes añadir la lógica necesaria aquí
-        }
-    }
-
-    fun onCircleDeleted(image: DraggableImage2) {
-        deletedImages.value.add(image)
-        deletedImageCount.value++
-
-        // Elimina el círculo correcto de la lista de imágenes
-        images.value.remove(image)
-
-        if (images.value.isNotEmpty()) {
-            // Quedan círculos, selecciona un nuevo color objetivo
-            selectNewColorObjective()
-        } else {
-            // No quedan círculos visibles, genera nuevos círculos
-            val randomImageCount = Random.nextInt(1, 11)
-            addNewImages2(images.value, randomImageCount)
-
-            // Selecciona un nuevo color objetivo de entre los círculos restantes
-            selectNewColorObjective()
-        }
-    }
+    var images by remember { mutableStateOf(generateImages()) }
+    var visibleImages by remember { mutableStateOf(images.filter { it.isVisible }) }
+    var deletedImages by remember { mutableStateOf(mutableListOf<DraggableImage>()) }
+    var deletedImageCount by remember { mutableStateOf(0) }
 
     Box(
         modifier = Modifier
@@ -86,7 +59,7 @@ fun Juego2(navController: NavHostController) {
                 }
             },
             modifier = Modifier
-                .align(Alignment.TopEnd)
+                .align(Alignment.TopEnd) // Cambiado a Alignment.TopEnd
                 .padding(8.dp),
             contentPadding = PaddingValues(8.dp)
         ) {
@@ -103,37 +76,47 @@ fun Juego2(navController: NavHostController) {
             )
         }
 
-        // Muestra el color objetivo en la parte superior
         Box(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(top = 16.dp, start = 16.dp)
-                .background(color = colorObjetivo.value, shape = CircleShape)
-                .size(40.dp)
-        )
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            Text(
+                text = "Número de imágenes visibles: ${visibleImages.size}",
+                modifier = Modifier
+                    .align(Alignment.TopStart) // Mantenido como Alignment.TopStart
+                    .padding(16.dp)
+                    .then(Modifier.fillMaxWidth()),
+                fontSize = 20.sp
+            )
 
-        val visibleImages = images.value.filter { it.isVisible }
-        if (visibleImages.isNotEmpty()) {
-            visibleImages.forEach { image ->
-                DraggableImage2(image = image, colorObjetivo = colorObjetivo.value) {
-                    if (image.color == colorObjetivo.value) {
-                        onCircleDeleted(image)
+            Text(
+                text = "Número de imágenes eliminadas: $deletedImageCount",
+                modifier = Modifier
+                    .align(Alignment.TopStart) // Mantenido como Alignment.TopStart
+                    .padding(top = 48.dp, start = 16.dp)
+                    .then(Modifier.fillMaxWidth()),
+                fontSize = 20.sp
+            )
+
+            if (visibleImages.isNotEmpty()) {
+                visibleImages.forEach { image ->
+                    DraggableImage(image = image) {
+                        deletedImages.add(image)
+                        deletedImageCount++
+                        visibleImages = visibleImages.filter { it != image }
                     }
                 }
+            } else {
+                val randomImageCount = Random.nextInt(1, 11) // Genera un número aleatorio entre 1 y 20
+                addNewImages(images, randomImageCount)
+                visibleImages = images
             }
-        } else {
-            val randomImageCount = Random.nextInt(1, 11)
-            addNewImages2(images.value, randomImageCount)
-
-            // Selecciona un nuevo color objetivo de entre los círculos restantes
-            selectNewColorObjective()
         }
     }
 }
 
 
 
-data class DraggableImage2(
+data class DraggableImage(
     val id: Int,
     var offset: IntOffset,
     val color: Color,
@@ -141,18 +124,18 @@ data class DraggableImage2(
     var isVisible: Boolean = true
 )
 
-fun addNewImages2(images: MutableList<DraggableImage2>, imageCount: Int) {
+fun addNewImages(images: MutableList<DraggableImage>, imageCount: Int) {
     images.clear()
 
     for (id in 1..imageCount) {
         val xOffset = Random.nextInt(100, 1500)
         val yOffset = Random.nextInt(100, 1000)
-        val color = generateRandomColor()
-        val radius = Random.nextInt(150, 200)
+        val color = Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f)
+        val radius = Random.nextInt(150, 200) // Radio aleatorio para los círculos
         val isVisible = true
 
         images.add(
-            DraggableImage2(
+            DraggableImage(
                 id = images.size + 1,
                 offset = IntOffset(xOffset, yOffset),
                 color = color,
@@ -164,7 +147,7 @@ fun addNewImages2(images: MutableList<DraggableImage2>, imageCount: Int) {
 }
 
 @Composable
-fun DraggableImage2(image: DraggableImage2, colorObjetivo: Color, onDeleteClick: () -> Unit) {
+fun DraggableImage(image: DraggableImage, onDeleteClick: () -> Unit) {
     Box(
         modifier = Modifier
             .offset { image.offset }
@@ -172,27 +155,25 @@ fun DraggableImage2(image: DraggableImage2, colorObjetivo: Color, onDeleteClick:
             .fillMaxSize()
             .background(color = image.color, shape = CircleShape)
             .clickable {
-                if (image.isVisible && image.color == colorObjetivo) {
-                    onDeleteClick()
-                }
+                image.isVisible = !image.isVisible
+                onDeleteClick()
             }
     ) {
         // Agrega el contenido de la imagen aquí, si es necesario
     }
 }
 
-
-fun generateImages2(): MutableList<DraggableImage2> {
-    val images = mutableListOf<DraggableImage2>()
+fun generateImages(): MutableList<DraggableImage> {
+    val images = mutableListOf<DraggableImage>()
 
     for (id in 1..10) {
         val xOffset = Random.nextInt(100, 2000)
         val yOffset = Random.nextInt(100, 1000)
-        val color = generateRandomColor()
+        val color = Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f)
         val radius = Random.nextInt(150, 200)
 
         images.add(
-            DraggableImage2(
+            DraggableImage(
                 id = id,
                 offset = IntOffset(xOffset, yOffset),
                 color = color,
@@ -204,14 +185,3 @@ fun generateImages2(): MutableList<DraggableImage2> {
     return images
 }
 
-
-
-
-fun generateRandomColor(): Color {
-    return Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f)
-}
-
-fun generateRandomColor(images: List<DraggableImage2>): Color {
-    val availableColors = images.map { it.color }.distinct()
-    return availableColors.random()
-}

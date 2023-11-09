@@ -31,17 +31,15 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import kotlin.random.Random
 import androidx.compose.ui.unit.sp
+import com.example.appfinal.screens.jugar.juegos.juego4.DraggableImage3
+import com.example.appfinal.screens.jugar.juegos.juego4.generateImages3
 
 @Composable
-fun Juego1 (navController: NavHostController){
-    // Establecer el fondo azul claro
+fun Juego1(navController: NavHostController) {
     val azulClaro = Color(173, 216, 230)
-    var images by remember { mutableStateOf(generateImages()) }
-    var visibleImages by remember { mutableStateOf(images.filter { it.isVisible }) }
-    var deletedImages by remember { mutableStateOf(mutableListOf<DraggableImage>()) }
-    var deletedImageCount by remember { mutableStateOf(0) }
 
     Box(
+
         modifier = Modifier
             .fillMaxSize()
             .background(color = azulClaro)
@@ -56,6 +54,7 @@ fun Juego1 (navController: NavHostController){
                 }
             },
             modifier = Modifier
+                .align(Alignment.TopEnd)
                 .padding(8.dp),
             contentPadding = PaddingValues(8.dp)
         ) {
@@ -68,6 +67,10 @@ fun Juego1 (navController: NavHostController){
             Text(
                 text = "Regresar",
                 color = Color.White,
+                fontWeight = FontWeight.Bold)
+        }
+    }
+}
                 fontWeight = FontWeight.Bold
             )
         }
