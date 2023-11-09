@@ -6,10 +6,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,17 +40,22 @@ fun HomeScreen(navController: NavHostController) {
 
         // Esquina superior derecha de cerrar sesión
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalAlignment = Alignment.End
+            modifier = Modifier.offset(x = 1000.dp, y = 15.dp)
         ) {
-            Button(
-                onClick = {
-                    navController.navigate("LoginScreen")
-                }
+            // Inicia sesión
+            Box(
+                modifier = Modifier
+                    .height(150.dp)
+                    .width(400.dp)
+                    .clickable {
+                        navController.navigate("LoginScreen")
+                    }
             ) {
-                Text(text = "Cerrar sesión")
+                Image(
+                    painter = painterResource(id = R.drawable.cerrar_sesion),
+                    contentDescription = null,
+                    //modifier = Modifier.fillMaxSize()
+                )
             }
         }
 
