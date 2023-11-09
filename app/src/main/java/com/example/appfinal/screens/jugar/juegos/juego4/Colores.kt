@@ -2,9 +2,7 @@ package com.example.appfinal.screens.jugar.juegos.juego4
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
@@ -30,7 +28,10 @@ import kotlin.random.Random
 
 @Composable
 fun Colores (navController: NavHostController) {
+    // Fondo
     val azulClaro = Color(173, 216, 230)
+
+    // Variables
     val images = remember { mutableStateOf(generateImages2()) }
     val deletedImages = remember { mutableStateOf(mutableListOf<DraggableImage2>()) }
     val deletedImageCount = remember { mutableStateOf(0) }
@@ -80,7 +81,6 @@ fun Colores (navController: NavHostController) {
                 }
             },
             modifier = Modifier
-                .align(Alignment.TopEnd)
                 .padding(8.dp),
             contentPadding = PaddingValues(8.dp)
         ) {
@@ -100,10 +100,10 @@ fun Colores (navController: NavHostController) {
         // Muestra el color objetivo en la parte superior
         Box(
             modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(top = 16.dp, start = 16.dp)
+                .align(Alignment.TopEnd)
+                .padding(16.dp)
                 .background(color = colorObjetivo.value, shape = CircleShape)
-                .size(40.dp)
+                .size(70.dp)
         )
 
         val visibleImages = images.value.filter { it.isVisible }
@@ -124,8 +124,6 @@ fun Colores (navController: NavHostController) {
         }
     }
 }
-
-
 
 data class DraggableImage2(
     val id: Int,
@@ -175,7 +173,6 @@ fun DraggableImage2(image: DraggableImage2, colorObjetivo: Color, onDeleteClick:
     }
 }
 
-
 fun generateImages2(): MutableList<DraggableImage2> {
     val images = mutableListOf<DraggableImage2>()
 
@@ -197,10 +194,6 @@ fun generateImages2(): MutableList<DraggableImage2> {
 
     return images
 }
-
-
-
-
 
 fun generateRandomColor(): Color {
     return Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f)

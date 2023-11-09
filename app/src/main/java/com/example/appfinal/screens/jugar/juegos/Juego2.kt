@@ -2,12 +2,10 @@ package com.example.appfinal.screens.jugar.juegos
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,7 +16,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,12 +30,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import kotlin.random.Random
 
-
-
 @Composable
 fun Juego2 (navController: NavHostController){
     // Establecer el fondo azul claro
     val azulClaro = Color(173, 216, 230)
+
+    // Variables
     var images by remember { mutableStateOf(generateImages()) }
     var visibleImages by remember { mutableStateOf(images.filter { it.isVisible }) }
     var deletedImages by remember { mutableStateOf(mutableListOf<DraggableImage>()) }
@@ -59,7 +56,6 @@ fun Juego2 (navController: NavHostController){
                 }
             },
             modifier = Modifier
-                .align(Alignment.TopEnd) // Cambiado a Alignment.TopEnd
                 .padding(8.dp),
             contentPadding = PaddingValues(8.dp)
         ) {
@@ -76,27 +72,27 @@ fun Juego2 (navController: NavHostController){
             )
         }
 
-        Box(
-            modifier = Modifier.fillMaxSize(),
+        // El texto que aparece
+        Column (
+            modifier = Modifier
+                .padding(16.dp)
+                .align(Alignment.TopEnd)
         ) {
             Text(
                 text = "Número de imágenes visibles: ${visibleImages.size}",
-                modifier = Modifier
-                    .align(Alignment.TopStart) // Mantenido como Alignment.TopStart
-                    .padding(16.dp)
-                    .then(Modifier.fillMaxWidth()),
-                fontSize = 20.sp
+                fontSize = 20.sp,
             )
 
             Text(
                 text = "Número de imágenes eliminadas: $deletedImageCount",
-                modifier = Modifier
-                    .align(Alignment.TopStart) // Mantenido como Alignment.TopStart
-                    .padding(top = 48.dp, start = 16.dp)
-                    .then(Modifier.fillMaxWidth()),
-                fontSize = 20.sp
+                fontSize = 20.sp,
             )
+        }
 
+        // Logica del juego
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
             if (visibleImages.isNotEmpty()) {
                 visibleImages.forEach { image ->
                     DraggableImage(image = image) {
@@ -113,8 +109,6 @@ fun Juego2 (navController: NavHostController){
         }
     }
 }
-
-
 
 data class DraggableImage(
     val id: Int,
@@ -184,4 +178,3 @@ fun generateImages(): MutableList<DraggableImage> {
 
     return images
 }
-
