@@ -43,7 +43,7 @@ fun HomeScreen(navController: NavHostController) {
         ) {
             Button(
                 onClick = {
-
+                    navController.navigate("LoginScreen")
                 }
             ) {
                 Text(text = "Cerrar sesión")

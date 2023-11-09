@@ -16,6 +16,7 @@ import com.example.appfinal.screens.jugar.juegos.juego4.Juego4Screen
 import com.example.appfinal.screens.jugar.juegos.juego4.Numeros
 import com.example.appfinal.screens.jugar.juegos.juego4.Resta
 import com.example.appfinal.screens.jugar.juegos.juego4.Suma
+import com.example.appfinal.screens.login.LoginScreen
 import com.example.appfinal.screens.tarjetas.TarjetasScreen
 
 @Preview
@@ -26,7 +27,12 @@ fun NavigationScreen(){
     val navController = rememberNavController()
 
     // #2 Crear el contenedor y definir las rutas
-    NavHost(navController = navController, startDestination = "HomeScreen"){
+    NavHost(navController = navController, startDestination = "LoginScreen"){
+        // Primera página que aparece
+        composable("LoginScreen"){
+            LoginScreen(navController)
+        }
+
         // Paginas dentro de HomeScreen
         composable("HomeScreen") {
             HomeScreen(navController)
