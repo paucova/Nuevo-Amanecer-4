@@ -184,3 +184,4 @@ fun generateImages(): MutableList<DraggableImage> {
 
     return images
 }
+

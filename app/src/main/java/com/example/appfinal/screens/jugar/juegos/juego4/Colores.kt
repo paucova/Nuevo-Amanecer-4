@@ -201,6 +201,7 @@ fun generateImages2(): MutableList<DraggableImage2> {
 
 
 
+
 fun generateRandomColor(): Color {
     return Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f)
 }

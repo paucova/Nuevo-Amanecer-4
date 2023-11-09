@@ -76,4 +76,5 @@ fun Juego1 (navController: NavHostController){
 
         }
 
+
 }

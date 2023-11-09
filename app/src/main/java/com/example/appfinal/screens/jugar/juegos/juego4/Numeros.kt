@@ -176,6 +176,7 @@ fun DraggableImage3(image: DraggableImage3, onDeleteClick: () -> Unit) {
     }
 }
 
+
 fun generateImages3(): MutableList<DraggableImage3> {
     val images = mutableListOf<DraggableImage3>()
 

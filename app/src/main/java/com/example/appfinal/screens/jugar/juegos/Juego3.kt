@@ -45,6 +45,7 @@ fun Juego3(navController: NavHostController) {
     var currentNumber by remember { mutableStateOf(1) }
 
     Box(
+
         modifier = Modifier
             .fillMaxSize()
             .background(color = azulClaro)
