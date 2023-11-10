@@ -1,7 +1,6 @@
 package com.example.appfinal.screens.jugar
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,14 +27,18 @@ import com.example.appfinal.R
 
 @Composable
 fun JugarScreen (navController: NavHostController) {
-    // Establecer el fondo azul claro
-    val azulClaro = Color(173, 216, 230)
-
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = azulClaro)
     ) {
+        // Fondo de imagen
+        Image(
+            painter = painterResource(id = R.drawable.fondo_jugar),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = androidx.compose.ui.layout.ContentScale.Crop
+        )
+
         // Botón de regreso a HomeScreen
         Button(
             onClick = {
