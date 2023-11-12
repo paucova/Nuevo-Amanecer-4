@@ -1,7 +1,6 @@
 package com.example.appfinal.screens.jugar.juegos.juego4
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,7 +33,7 @@ fun Juego4Screen (navController: NavHostController) {
     ) {
         // Fondo de imagen
         Image(
-            painter = painterResource(id = R.drawable.fondo_oceano),
+            painter = painterResource(id = R.drawable.fondo_jugar2),
             contentDescription = null, // Puedes proporcionar una descripción si es necesario
             modifier = Modifier.fillMaxSize(),
             contentScale = androidx.compose.ui.layout.ContentScale.Crop
