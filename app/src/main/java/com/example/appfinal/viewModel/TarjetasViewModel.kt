@@ -29,13 +29,16 @@ class TarjetasViewModel(application: Application) : AndroidViewModel(application
             }
         }
     }
-
     fun saveImageReference(name: String, category: String, text: String, filePath:Int) {
         val image = Images(0,name, category, text, filePath)
         viewModelScope.launch {
             daoImagenes.saveImageReference(image)
         }
     }
-
-
+    fun nuevaCategoria(text: String){
+        val categ = Categorias(0,text)
+        viewModelScope.launch {
+            daoCategorias.insertCategoria(categ)
+        }
+    }
 }

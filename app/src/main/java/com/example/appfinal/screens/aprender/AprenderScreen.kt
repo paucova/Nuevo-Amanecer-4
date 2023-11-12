@@ -20,9 +20,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.appfinal.screens.aprender.categorias.ViewCategoriesScreen
+import com.example.appfinal.viewModel.TarjetasViewModel
 
 @Composable
-fun AprenderScreen (navController: NavHostController) {
+fun AprenderScreen (navController: NavHostController, tarjetasViewModel: TarjetasViewModel) {
     // Establecer el fondo azul claro
     val azulClaro = Color(173, 216, 230)
 
@@ -62,7 +64,8 @@ fun AprenderScreen (navController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Tarjetas y Colecciones")
+            // llamamos a la función que crea las tarjetas de selección de categorías
+            ViewCategoriesScreen(navController = navController, tarjetasViewModel = tarjetasViewModel)
         }
 
     }

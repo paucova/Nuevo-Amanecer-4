@@ -1,11 +1,15 @@
 package com.example.appfinal.screens.navigation
 
+import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.appfinal.screens.aprender.AprenderScreen
+import com.example.appfinal.screens.aprender.categorias.ViewCategoriesScreen
+import com.example.appfinal.screens.aprender.columnas.ColumnasScreen
+import com.example.appfinal.screens.aprender.viewImages.ViewImagesScreen
 import com.example.appfinal.screens.home.HomeScreen
 import com.example.appfinal.screens.jugar.JugarScreen
 import com.example.appfinal.screens.jugar.juegos.Juego1
@@ -18,10 +22,10 @@ import com.example.appfinal.screens.jugar.juegos.juego4.Resta
 import com.example.appfinal.screens.jugar.juegos.juego4.Suma
 import com.example.appfinal.screens.login.LoginScreen
 import com.example.appfinal.screens.tarjetas.TarjetasScreen
+import com.example.appfinal.viewModel.TarjetasViewModel
 
-@Preview
 @Composable
-fun NavigationScreen(){
+fun NavigationScreen(tarjetasViewModel: TarjetasViewModel, context: Context){
 
     // #1  Crear el objeto de NavController
     val navController = rememberNavController()
@@ -39,7 +43,22 @@ fun NavigationScreen(){
         }
 
         composable("AprenderScreen") {
-            AprenderScreen(navController)
+            AprenderScreen(navController, tarjetasViewModel)
+        }
+
+        composable("ViewCategoriesScreen"){
+            ViewCategoriesScreen(navController, tarjetasViewModel)
+        }
+
+        composable("ColumnasScreen/{text}"){
+            val categoria = it.arguments?.getString("text")
+            ColumnasScreen(navController, categoria)
+        }
+
+        composable("ViewImagesScreen/{numero}/{text}"){
+            val categoria = it.arguments?.getString("text")
+            val numero = it.arguments?.getString("numero")
+            ViewImagesScreen(navController, tarjetasViewModel, context, categoria, numero)
         }
 
         composable("JugarScreen") {
