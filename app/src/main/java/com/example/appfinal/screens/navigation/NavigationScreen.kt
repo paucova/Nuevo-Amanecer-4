@@ -71,7 +71,7 @@ fun NavigationScreen(tarjetasViewModel: TarjetasViewModel, context: Context){
 
         // Videojuegos
         composable("Juego1") {
-            Juego1(navController)
+            Juego1(navController, tarjetasViewModel, context)
         }
 
         composable("Juego2") {
