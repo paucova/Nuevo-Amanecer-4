@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.appfinal.R
+import com.example.appfinal.screens.home.noRippleClickable
 
 @Composable
 fun ColumnasScreen (
@@ -79,7 +80,7 @@ fun ColumnasScreen (
                     Box(
                         modifier = Modifier
                             .size(400.dp)
-                            .clickable {
+                            .noRippleClickable {
                                 numColumnas = 1
                                 navController.navigate("ViewImagesScreen/${numColumnas}/${categoria}")
                             }
@@ -96,7 +97,7 @@ fun ColumnasScreen (
                     Box(
                         modifier = Modifier
                             .size(400.dp)
-                            .clickable {
+                            .noRippleClickable {
                                 numColumnas = 2
                                 navController.navigate("ViewImagesScreen/${numColumnas}/${categoria}")
                             }
@@ -117,7 +118,7 @@ fun ColumnasScreen (
                     Box(
                         modifier = Modifier
                             .size(400.dp)
-                            .clickable {
+                            .noRippleClickable {
                                 numColumnas = 3
                                 navController.navigate("ViewImagesScreen/${numColumnas}/${categoria}")
                             }
@@ -135,7 +136,7 @@ fun ColumnasScreen (
                     Box(
                         modifier = Modifier
                             .size(400.dp) // Ajusta el tamaño del botón según sea necesario
-                            .clickable {
+                            .noRippleClickable {
                                 numColumnas = 4
                                 navController.navigate("ViewImagesScreen/${numColumnas}/${categoria}")
                             }
