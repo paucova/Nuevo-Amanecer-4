@@ -86,7 +86,7 @@ fun Juego1(navController: NavHostController,
         ) {
             if (imagen.filePath != -1) {
                 Box(modifier = Modifier
-                    .size(width = 300.dp, height = 300.dp)
+                    .size(width = 500.dp, height = 500.dp)
                     .clickable {
                         visual = true
                         processTTS(context, imagen.text)
