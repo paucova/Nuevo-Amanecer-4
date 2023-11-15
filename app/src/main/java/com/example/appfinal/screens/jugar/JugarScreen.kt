@@ -1,7 +1,6 @@
 package com.example.appfinal.screens.jugar
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -23,19 +23,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.appfinal.R
+import com.example.appfinal.screens.home.noRippleClickable
 
 @Composable
 fun JugarScreen (navController: NavHostController) {
-    // Establecer el fondo azul claro
-    val azulClaro = Color(173, 216, 230)
-
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = azulClaro)
     ) {
+        // Fondo de imagen
+        Image(
+            painter = painterResource(id = R.drawable.fondo_jugar),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = androidx.compose.ui.layout.ContentScale.Crop
+        )
+
         // Botón de regreso a HomeScreen
         Button(
             onClick = {
@@ -76,7 +82,7 @@ fun JugarScreen (navController: NavHostController) {
                     Box(
                         modifier = Modifier
                             .size(400.dp) // Ajusta el tamaño del botón según sea necesario
-                            .clickable {
+                            .noRippleClickable {
                                 navController.navigate("Juego1")
                             }
                     ) {
@@ -85,6 +91,12 @@ fun JugarScreen (navController: NavHostController) {
                             contentDescription = null,
                             modifier = Modifier.fillMaxSize()
                         )
+
+                        Text(text = "Aprender",
+                            color = Color.White,
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.offset(x = 140.dp, y = 60.dp))
                     }
                 }
 
@@ -93,7 +105,7 @@ fun JugarScreen (navController: NavHostController) {
                     Box(
                         modifier = Modifier
                             .size(400.dp) // Ajusta el tamaño del botón según sea necesario
-                            .clickable {
+                            .noRippleClickable {
                                 navController.navigate("Juego2")
                             }
                     ) {
@@ -102,6 +114,12 @@ fun JugarScreen (navController: NavHostController) {
                             contentDescription = null,
                             modifier = Modifier.fillMaxSize()
                         )
+
+                        Text(text = "Reventar burbujas",
+                            color = Color.White,
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.offset(x = 80.dp, y = 60.dp))
                     }
                 }
             }
@@ -113,7 +131,7 @@ fun JugarScreen (navController: NavHostController) {
                     Box(
                         modifier = Modifier
                             .size(400.dp) // Ajusta el tamaño del botón según sea necesario
-                            .clickable {
+                            .noRippleClickable {
                                 navController.navigate("Juego3")
                             }
                     ) {
@@ -122,6 +140,12 @@ fun JugarScreen (navController: NavHostController) {
                             contentDescription = null,
                             modifier = Modifier.fillMaxSize()
                         )
+
+                        Text(text = "Colorear peces",
+                            color = Color.White,
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.offset(x = 100.dp, y = 20.dp))
                     }
                 }
 
@@ -130,7 +154,7 @@ fun JugarScreen (navController: NavHostController) {
                     Box(
                         modifier = Modifier
                             .size(400.dp) // Ajusta el tamaño del botón según sea necesario
-                            .clickable {
+                            .noRippleClickable {
                                 navController.navigate("Juego4Screen")
                             }
                     ) {
@@ -139,6 +163,12 @@ fun JugarScreen (navController: NavHostController) {
                             contentDescription = null,
                             modifier = Modifier.fillMaxSize()
                         )
+
+                        Text(text = "Nivel 4: Juegos",
+                            color = Color.White,
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.offset(x = 100.dp, y = 20.dp))
                     }
                 }
             }

@@ -1,7 +1,6 @@
 package com.example.appfinal.screens.jugar.juegos.juego4
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.appfinal.R
+import com.example.appfinal.screens.home.noRippleClickable
 
 @Composable
 fun Juego4Screen (navController: NavHostController) {
@@ -34,7 +34,7 @@ fun Juego4Screen (navController: NavHostController) {
     ) {
         // Fondo de imagen
         Image(
-            painter = painterResource(id = R.drawable.fondo_oceano),
+            painter = painterResource(id = R.drawable.fondo_jugar2),
             contentDescription = null, // Puedes proporcionar una descripción si es necesario
             modifier = Modifier.fillMaxSize(),
             contentScale = androidx.compose.ui.layout.ContentScale.Crop
@@ -80,7 +80,7 @@ fun Juego4Screen (navController: NavHostController) {
                     Box(
                         modifier = Modifier
                             .size(400.dp) // Ajusta el tamaño del botón según sea necesario
-                            .clickable {
+                            .noRippleClickable {
                                 navController.navigate("Juego4.4Suma")
                             }
                     ) {
@@ -97,7 +97,7 @@ fun Juego4Screen (navController: NavHostController) {
                     Box(
                         modifier = Modifier
                             .size(400.dp) // Ajusta el tamaño del botón según sea necesario
-                            .clickable {
+                            .noRippleClickable {
                                 navController.navigate("Juego4.3Resta")
                             }
                     ) {
@@ -117,7 +117,7 @@ fun Juego4Screen (navController: NavHostController) {
                     Box(
                         modifier = Modifier
                             .size(400.dp) // Ajusta el tamaño del botón según sea necesario
-                            .clickable {
+                            .noRippleClickable {
                                 navController.navigate("Juego4.1Colores")
                             }
                     ) {
@@ -134,7 +134,7 @@ fun Juego4Screen (navController: NavHostController) {
                     Box(
                         modifier = Modifier
                             .size(400.dp) // Ajusta el tamaño del botón según sea necesario
-                            .clickable {
+                            .noRippleClickable {
                                 navController.navigate("Juego4.2Numeros")
                             }
                     ) {

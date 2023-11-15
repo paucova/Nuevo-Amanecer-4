@@ -2,12 +2,10 @@ package com.example.appfinal.screens.jugar.juegos.juego4
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -33,9 +31,13 @@ import androidx.navigation.NavHostController
 import kotlin.math.pow
 import kotlin.math.sqrt
 import kotlin.random.Random
+
 @Composable
 fun Numeros(navController: NavHostController) {
+    // Fondo azul
     val azulClaro = Color(173, 216, 230)
+
+    // Otras variables
     var images by remember { mutableStateOf(generateImages3()) }
     var visibleImages by remember { mutableStateOf(listOf<DraggableImage3>()) }
     var deletedImages by remember { mutableStateOf(mutableListOf<DraggableImage3>()) }
@@ -57,7 +59,6 @@ fun Numeros(navController: NavHostController) {
                 }
             },
             modifier = Modifier
-                .align(Alignment.TopEnd)
                 .padding(8.dp),
             contentPadding = PaddingValues(8.dp)
         ) {
@@ -72,29 +73,28 @@ fun Numeros(navController: NavHostController) {
                 color = Color.White,
                 fontWeight = FontWeight.Bold)
         }
+
+        // El texto que aparece
+        Column (
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(16.dp)
+        ) {
+            Text(
+                text = "Número de imágenes visibles: ${visibleImages.size}",
+                fontSize = 20.sp,
+            )
+
+            Text(
+                text = "Número de imágenes eliminadas: $deletedImageCount",
+                fontSize = 20.sp,
+            )
+        }
     }
 
     Box(
         modifier = Modifier.fillMaxSize(),
     ) {
-        Text(
-            text = "Número de imágenes visibles: ${visibleImages.size}",
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(16.dp)
-                .then(Modifier.fillMaxWidth()),
-            fontSize = 20.sp
-        )
-
-        Text(
-            text = "Número de imágenes eliminadas: $deletedImageCount",
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(top = 48.dp, start = 16.dp)
-                .then(Modifier.fillMaxWidth()),
-            fontSize = 20.sp
-        )
-
         if (visibleImages.isNotEmpty()) {
             val sortedImages = visibleImages.sortedBy { it.number }
             sortedImages.forEach { image ->
