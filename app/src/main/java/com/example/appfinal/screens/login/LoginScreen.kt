@@ -9,13 +9,18 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -36,6 +41,16 @@ fun LoginScreen (navController: NavHostController){
     val password = remember {
         mutableStateOf("1234")
     }
+
+    val enteredPassword = remember {
+        mutableStateOf("")
+    }
+
+    val isPasswordCorrect = remember {
+        mutableStateOf(false)
+    }
+
+    var isDialogVisible by remember { mutableStateOf(false) }
 
     // Box para poner imagen de fondo
     Box(
@@ -96,7 +111,6 @@ fun LoginScreen (navController: NavHostController){
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
                 )
-
             }
 
             // Tercera parte: Botones
@@ -127,13 +141,55 @@ fun LoginScreen (navController: NavHostController){
                         .height(47.dp)
                         .width(300.dp)
                         .clickable {
-                            navController.navigate("AgregarUsuario")
+                            // Pregunta por contraseña
+                            isDialogVisible = true
                         }
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.agregar_usuario),
                         contentDescription = null,
                         modifier = Modifier.fillMaxWidth() // Asegura que la imagen llene el espacio del botón
+                    )
+                }
+
+                // Lógica para que pregunte por contraseña de admin
+                if (isDialogVisible) {
+                    AlertDialog(
+                        onDismissRequest = { isDialogVisible = false },
+                        title = { Text("Ingrese la contraseña") },
+                        text = {
+                            TextField(
+                                value = enteredPassword.value,
+                                onValueChange = {
+                                    enteredPassword.value = it
+                                },
+                                placeholder = {
+                                    Text("Contraseña")
+                                },
+                                visualTransformation = PasswordVisualTransformation(),
+                                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
+                            )
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                // Validate the password
+                                if (enteredPassword.value == "1234") {
+                                    isPasswordCorrect.value = true
+                                    isDialogVisible = false
+                                    // Va a la pestaña
+                                    navController.navigate("AgregarUsuario")
+                                }
+                            }) {
+                                Text("Aceptar")
+                            }
+                        },
+                        dismissButton = {
+                            Button(onClick = {
+                                isDialogVisible = false
+                            }) {
+                                Text("Cancelar")
+                            }
+                        }
                     )
                 }
 
