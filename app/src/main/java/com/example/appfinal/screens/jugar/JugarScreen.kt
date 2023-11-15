@@ -164,7 +164,7 @@ fun JugarScreen (navController: NavHostController) {
                             modifier = Modifier.fillMaxSize()
                         )
 
-                        Text(text = "Nivel 4 Juegos",
+                        Text(text = "Nivel 4: Juegos",
                             color = Color.White,
                             fontSize = 30.sp,
                             fontWeight = FontWeight.Bold,
