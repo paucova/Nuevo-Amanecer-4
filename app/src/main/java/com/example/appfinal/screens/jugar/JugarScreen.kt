@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -22,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.appfinal.R
 import com.example.appfinal.screens.home.noRippleClickable
@@ -89,6 +91,12 @@ fun JugarScreen (navController: NavHostController) {
                             contentDescription = null,
                             modifier = Modifier.fillMaxSize()
                         )
+
+                        Text(text = "Aprender",
+                            color = Color.White,
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.offset(x = 140.dp, y = 60.dp))
                     }
                 }
 
@@ -106,6 +114,12 @@ fun JugarScreen (navController: NavHostController) {
                             contentDescription = null,
                             modifier = Modifier.fillMaxSize()
                         )
+
+                        Text(text = "Reventar burbujas",
+                            color = Color.White,
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.offset(x = 80.dp, y = 60.dp))
                     }
                 }
             }
@@ -126,6 +140,12 @@ fun JugarScreen (navController: NavHostController) {
                             contentDescription = null,
                             modifier = Modifier.fillMaxSize()
                         )
+
+                        Text(text = "Colorear peces",
+                            color = Color.White,
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.offset(x = 100.dp, y = 20.dp))
                     }
                 }
 
@@ -143,6 +163,12 @@ fun JugarScreen (navController: NavHostController) {
                             contentDescription = null,
                             modifier = Modifier.fillMaxSize()
                         )
+
+                        Text(text = "Nivel 4 Juegos",
+                            color = Color.White,
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.offset(x = 100.dp, y = 20.dp))
                     }
                 }
             }
