@@ -4,13 +4,19 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -20,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -28,13 +35,17 @@ import androidx.navigation.NavHostController
 import com.example.appfinal.R
 
 @Composable
-fun LoginScreen (navController: NavHostController){
+fun AgregarUsuario (navController: NavHostController) {
     val email = remember {
         mutableStateOf("123@tec.mx")
     }
 
     val password = remember {
         mutableStateOf("1234")
+    }
+
+    val grupo = remember {
+        mutableStateOf("1")
     }
 
     // Box para poner imagen de fondo
@@ -49,14 +60,40 @@ fun LoginScreen (navController: NavHostController){
             contentScale = ContentScale.Crop
         )
 
+        // Botón de regreso a login
+        Button(
+            onClick = {
+                navController.navigate("LoginScreen") {
+                    popUpTo("LoginScreen") {
+                        inclusive = true
+                    }
+                }
+            },
+            modifier = Modifier
+                .padding(8.dp),
+            contentPadding = PaddingValues(8.dp)
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = null,
+                tint = Color.White
+            )
+
+            Text(
+                text = "Regresar",
+                color = Color.White,
+                fontWeight = FontWeight.Bold
+            )
+        }
+
         // Una columna para que se separe
         Column {
             // Primera parte: Mensajes
             Column(
-                modifier = Modifier.offset(x = 250.dp, y = 100.dp)
+                modifier = Modifier.offset(x = 215.dp, y = 100.dp)
             ) {
                 Text(
-                    text = "Inicia Sesión",
+                    text = "Agregar Usuario",
                     color = Color.White,
                     fontSize = 60.sp)
 
@@ -67,7 +104,7 @@ fun LoginScreen (navController: NavHostController){
 
             // Segunda parte: Ingresar informacion
             Column(
-                modifier = Modifier.offset(x = 250.dp, y = 150.dp)
+                modifier = Modifier.offset(x = 215.dp, y = 150.dp)
             ) {
                 Text(text = "Usuario",
                     color = Color.White,
@@ -97,51 +134,49 @@ fun LoginScreen (navController: NavHostController){
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
                 )
 
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Text(text = "Grupo",
+                    color = Color.White,
+                    fontSize = 15.sp)
+
+                TextField(
+                    value = grupo.value,
+                    onValueChange = {
+                        grupo.value = it
+                    },
+                    placeholder = {
+                        Text("Grupo")
+                    }
+                )
+
             }
 
             // Tercera parte: Botones
             Column(
-                modifier = Modifier.offset(x = 240.dp, y = 225.dp)
+                modifier = Modifier.offset(x = 205.dp, y = 225.dp)
             ) {
-                // Inicia sesión
+                // Agregar Usuario
                 Box(
                     modifier = Modifier
                         .height(47.dp)
                         .width(300.dp)
                         .clickable {
-                            navController.navigate("HomeScreen")
+                            //navController.navigate("LoginScreen")
                         }
                 ) {
                     Image(
-                        painter = painterResource(id = R.drawable.iniciar_sesion),
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize()// Asegura que la imagen llene el espacio del botón
-                    )
-                }
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Agregar usuario
-                Box(
-                    modifier = Modifier
-                        .height(47.dp)
-                        .width(300.dp)
-                        .clickable {
-                            navController.navigate("AgregarUsuario")
-                        }
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.agregar_usuario),
+                        painter = painterResource(id = R.drawable.agregar_usuario_2),
                         contentDescription = null,
                         modifier = Modifier.fillMaxWidth() // Asegura que la imagen llene el espacio del botón
                     )
                 }
 
-            }
 
+            }
 
         }
 
-
     }
+
 }

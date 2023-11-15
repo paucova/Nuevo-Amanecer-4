@@ -41,28 +41,6 @@ fun HomeScreen(navController: NavHostController) {
             contentScale = androidx.compose.ui.layout.ContentScale.Crop
         )
 
-        // Esquina superior derecha de cerrar sesión
-        Column(
-            modifier = Modifier.offset(x = 1000.dp, y = 15.dp)
-        ) {
-            // Inicia sesión
-            Box(
-                modifier = Modifier
-                    .height(150.dp)
-                    .width(400.dp)
-                    .clickable {
-
-                        navController.navigate("LoginScreen")
-                    }
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.cerrar_sesion),
-                    contentDescription = null,
-                    //modifier = Modifier.fillMaxSize()
-                )
-            }
-        }
-
         // Tres botones principales | todos centrados
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -130,8 +108,30 @@ fun HomeScreen(navController: NavHostController) {
 
         }
 
+        // Esquina superior derecha de cerrar sesión
+        Column(
+            modifier = Modifier.offset(x = 1000.dp, y = 15.dp)
+        ) {
+            // Inicia sesión
+            Box(
+                modifier = Modifier
+                    .height(150.dp)
+                    .width(400.dp)
+                    .clickable {
+                        navController.navigate("LoginScreen")
+                    }
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.cerrar_sesion),
+                    contentDescription = null,
+                    //modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
+
     }
 }
+
 // para quitar el efecto del click
 fun Modifier.noRippleClickable(onClick: () -> Unit): Modifier = composed {
     clickable(indication = null,

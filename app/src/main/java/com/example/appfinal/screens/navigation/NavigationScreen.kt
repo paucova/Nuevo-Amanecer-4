@@ -20,6 +20,7 @@ import com.example.appfinal.screens.jugar.juegos.juego4.Juego4Screen
 import com.example.appfinal.screens.jugar.juegos.juego4.Numeros
 import com.example.appfinal.screens.jugar.juegos.juego4.Resta
 import com.example.appfinal.screens.jugar.juegos.juego4.Suma
+import com.example.appfinal.screens.login.AgregarUsuario
 import com.example.appfinal.screens.login.LoginScreen
 import com.example.appfinal.screens.tarjetas.TarjetasScreen
 import com.example.appfinal.viewModel.TarjetasViewModel
@@ -32,9 +33,14 @@ fun NavigationScreen(tarjetasViewModel: TarjetasViewModel, context: Context){
 
     // #2 Crear el contenedor y definir las rutas
     NavHost(navController = navController, startDestination = "LoginScreen"){
-        // Primera página que aparece
+        // Lo del login
         composable("LoginScreen"){
             LoginScreen(navController)
+        }
+
+        // Agregar a un usuario
+        composable("AgregarUsuario"){
+            AgregarUsuario(navController)
         }
 
         // Paginas dentro de HomeScreen
