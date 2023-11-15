@@ -30,10 +30,11 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import kotlin.math.pow
+import kotlin.math.sqrt
 import kotlin.random.Random
-
 @Composable
-fun Numeros (navController: NavHostController) {
+fun Numeros(navController: NavHostController) {
     val azulClaro = Color(173, 216, 230)
     var images by remember { mutableStateOf(generateImages3()) }
     var visibleImages by remember { mutableStateOf(listOf<DraggableImage3>()) }
@@ -109,7 +110,8 @@ fun Numeros (navController: NavHostController) {
         } else {
             currentNumber = 1 // Restablecer el número actual a 1
             val randomImageCount = Random.nextInt(1, 11)
-            addNewImages3(images, randomImageCount)
+            val minDistance = 250 // Define la distancia mínima aquí
+            addNewImages3(images, randomImageCount, minDistance)
             visibleImages = images.sortedBy { it.number }
         }
     }
@@ -124,15 +126,28 @@ data class DraggableImage3(
     val number: Int
 )
 
-fun addNewImages3(images: MutableList<DraggableImage3>, imageCount: Int) {
+fun addNewImages3(images: MutableList<DraggableImage3>, imageCount: Int, minDistance: Int) {
     images.clear()
 
     val numbers = (1..imageCount).shuffled() // Lista de números aleatorios
     val usedNumbers = mutableSetOf<Int>()
 
     for (id in 1..imageCount) {
-        val xOffset = Random.nextInt(100, 1500)
-        val yOffset = Random.nextInt(100, 1000)
+        var xOffset: Int
+        var yOffset: Int
+
+        do {
+            xOffset = Random.nextInt(100, 1500)
+            yOffset = Random.nextInt(100, 1000)
+
+            // Asegúrate de que la nueva imagen tenga una distancia mínima con las imágenes existentes
+            val tooClose = images.any { existingImage ->
+                val distance = sqrt((xOffset - existingImage.offset.x).toDouble().pow(2) +
+                        (yOffset - existingImage.offset.y).toDouble().pow(2))
+                distance < minDistance
+            }
+        } while (tooClose)
+
         val color = Color(Random.nextFloat(), Random.nextFloat(), Random.nextFloat(), 1f)
         val radius = Random.nextInt(150, 200)
 
@@ -175,7 +190,6 @@ fun DraggableImage3(image: DraggableImage3, onDeleteClick: () -> Unit) {
         )
     }
 }
-
 
 fun generateImages3(): MutableList<DraggableImage3> {
     val images = mutableListOf<DraggableImage3>()
