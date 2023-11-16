@@ -77,7 +77,7 @@ fun TarjetasScreen(navController: NavHostController) {
                         modifier = Modifier
                             .size(400.dp) // Ajusta el tamaño del botón según sea necesario
                             .clickable {
-
+                                navController.navigate("AgregarTarjetaScreen")
                             }
                     ) {
                         Image(
