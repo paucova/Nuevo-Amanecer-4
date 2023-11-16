@@ -23,6 +23,7 @@ import com.example.appfinal.screens.jugar.juegos.juego4.Suma
 import com.example.appfinal.screens.login.AgregarUsuario
 import com.example.appfinal.screens.login.LoginScreen
 import com.example.appfinal.screens.tarjetas.TarjetasScreen
+import com.example.appfinal.screens.tarjetas.nuevaCategoria.AgregarCategoriaScreen
 import com.example.appfinal.screens.tarjetas.nuevaTarjeta.AgregarTarjetaScreen
 import com.example.appfinal.viewModel.TarjetasViewModel
 
@@ -77,6 +78,9 @@ fun NavigationScreen(tarjetasViewModel: TarjetasViewModel, context: Context){
         }
         composable("AgregarTarjetaScreen") {
             AgregarTarjetaScreen(navController)
+        }
+        composable("AgregarCategoriaScreen") {
+            AgregarCategoriaScreen(navController)
         }
 
         // Videojuegos
