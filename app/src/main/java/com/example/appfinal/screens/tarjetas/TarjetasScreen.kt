@@ -77,7 +77,7 @@ fun TarjetasScreen(navController: NavHostController) {
                         modifier = Modifier
                             .size(400.dp) // Ajusta el tamaño del botón según sea necesario
                             .clickable {
-
+                                navController.navigate("AgregarTarjetaScreen")
                             }
                     ) {
                         Image(
@@ -114,11 +114,11 @@ fun TarjetasScreen(navController: NavHostController) {
                         modifier = Modifier
                             .size(400.dp) // Ajusta el tamaño del botón según sea necesario
                             .clickable {
-
+                                navController.navigate("AgregarCategoriaScreen")
                             }
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.tarjetas),
+                            painter = painterResource(id = R.drawable.nueva_coleccion),
                             contentDescription = null,
                             modifier = Modifier.fillMaxSize()
                         )
@@ -135,7 +135,7 @@ fun TarjetasScreen(navController: NavHostController) {
                             }
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.tarjetas),
+                            painter = painterResource(id = R.drawable.mis_colecciones),
                             contentDescription = null,
                             modifier = Modifier.fillMaxSize()
                         )

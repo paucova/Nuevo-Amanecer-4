@@ -95,7 +95,8 @@ fun ViewImagesScreen(
                             )
                         }
                         if (bitmap != null) {
-                            Box(modifier = Modifier.fillMaxSize()) {
+                            Box(modifier = Modifier.fillMaxSize()
+                                .clickable { processTTS(context, imagen.text) }) {
                                 Image(
                                     bitmap = bitmap,
                                     contentDescription = "Tarjeta"

@@ -23,6 +23,8 @@ import com.example.appfinal.screens.jugar.juegos.juego4.Suma
 import com.example.appfinal.screens.login.AgregarUsuario
 import com.example.appfinal.screens.login.LoginScreen
 import com.example.appfinal.screens.tarjetas.TarjetasScreen
+import com.example.appfinal.screens.tarjetas.nuevaCategoria.AgregarCategoriaScreen
+import com.example.appfinal.screens.tarjetas.nuevaTarjeta.AgregarTarjetaScreen
 import com.example.appfinal.viewModel.TarjetasViewModel
 
 @Composable
@@ -52,6 +54,15 @@ fun NavigationScreen(tarjetasViewModel: TarjetasViewModel, context: Context){
             AprenderScreen(navController, tarjetasViewModel)
         }
 
+        composable("JugarScreen") {
+            JugarScreen(navController)
+        }
+
+        composable("TarjetasScreen") {
+            TarjetasScreen(navController)
+        }
+
+        // Agregar categoria y tarejetas (en aprender)
         composable("ViewCategoriesScreen"){
             ViewCategoriesScreen(navController, tarjetasViewModel)
         }
@@ -67,12 +78,12 @@ fun NavigationScreen(tarjetasViewModel: TarjetasViewModel, context: Context){
             ViewImagesScreen(navController, tarjetasViewModel, context, categoria, numero)
         }
 
-        composable("JugarScreen") {
-            JugarScreen(navController)
+        // Agregar tarejta y categoría (en tarjetas)
+        composable("AgregarTarjetaScreen") {
+            AgregarTarjetaScreen(navController)
         }
-
-        composable("TarjetasScreen") {
-            TarjetasScreen(navController)
+        composable("AgregarCategoriaScreen") {
+            AgregarCategoriaScreen(navController)
         }
 
         // Videojuegos
