@@ -50,7 +50,9 @@ fun LoginScreen (navController: NavHostController){
         mutableStateOf(false)
     }
 
-    var isDialogVisible by remember { mutableStateOf(false) }
+    var isDialogVisible by remember {
+        mutableStateOf(false)
+    }
 
     // Box para poner imagen de fondo
     Box(

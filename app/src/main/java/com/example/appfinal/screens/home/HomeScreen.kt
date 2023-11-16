@@ -15,20 +15,34 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.appfinal.R
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
+    val enteredPassword = remember { mutableStateOf("") }
+
+    val isPasswordCorrect = remember { mutableStateOf(false) }
+
+    var isDialogVisible by remember { mutableStateOf(false) }
+
     // Box para poner imagen de fondo
     Box(
         modifier = Modifier.fillMaxSize()
@@ -95,13 +109,55 @@ fun HomeScreen(navController: NavHostController) {
                     modifier = Modifier
                         .size(300.dp) // Ajusta el tamaño del botón según sea necesario
                         .noRippleClickable {
-                            navController.navigate("TarjetasScreen")
+                            // Pregunta por contraseña
+                            isDialogVisible = true
                         }
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.tarjetas),
                         contentDescription = null,
                         modifier = Modifier.fillMaxSize() // Asegura que la imagen llene el espacio del botón
+                    )
+                }
+
+                // Lógica para que pregunte por contraseña de admin
+                if (isDialogVisible) {
+                    AlertDialog(
+                        onDismissRequest = { isDialogVisible = false },
+                        title = { Text("Ingrese la contraseña") },
+                        text = {
+                            TextField(
+                                value = enteredPassword.value,
+                                onValueChange = {
+                                    enteredPassword.value = it
+                                },
+                                placeholder = {
+                                    Text("Contraseña")
+                                },
+                                visualTransformation = PasswordVisualTransformation(),
+                                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Password)
+                            )
+                        },
+                        confirmButton = {
+                            Button(onClick = {
+                                // Validate the password
+                                if (enteredPassword.value == "1234") {
+                                    isPasswordCorrect.value = true
+                                    isDialogVisible = false
+                                    // Va a la pestaña
+                                    navController.navigate("TarjetasScreen")
+                                }
+                            }) {
+                                Text("Aceptar")
+                            }
+                        },
+                        dismissButton = {
+                            Button(onClick = {
+                                isDialogVisible = false
+                            }) {
+                                Text("Cancelar")
+                            }
+                        }
                     )
                 }
             }

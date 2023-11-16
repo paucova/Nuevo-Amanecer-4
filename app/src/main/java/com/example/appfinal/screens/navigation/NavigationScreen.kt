@@ -54,6 +54,15 @@ fun NavigationScreen(tarjetasViewModel: TarjetasViewModel, context: Context){
             AprenderScreen(navController, tarjetasViewModel)
         }
 
+        composable("JugarScreen") {
+            JugarScreen(navController)
+        }
+
+        composable("TarjetasScreen") {
+            TarjetasScreen(navController)
+        }
+
+        // Agregar categoria y tarejetas (en aprender)
         composable("ViewCategoriesScreen"){
             ViewCategoriesScreen(navController, tarjetasViewModel)
         }
@@ -69,13 +78,7 @@ fun NavigationScreen(tarjetasViewModel: TarjetasViewModel, context: Context){
             ViewImagesScreen(navController, tarjetasViewModel, context, categoria, numero)
         }
 
-        composable("JugarScreen") {
-            JugarScreen(navController)
-        }
-
-        composable("TarjetasScreen") {
-            TarjetasScreen(navController)
-        }
+        // Agregar tarejta y categoría (en tarjetas)
         composable("AgregarTarjetaScreen") {
             AgregarTarjetaScreen(navController)
         }
