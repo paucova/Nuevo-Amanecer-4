@@ -1,6 +1,7 @@
 package com.example.appfinal.screens.login
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,22 +16,35 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.modifier.modifierLocalMapOf
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavHostController
 import com.example.appfinal.R
 
@@ -136,25 +150,12 @@ fun AgregarUsuario (navController: NavHostController) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                Text(text = "Grupo",
-                    color = Color.White,
-                    fontSize = 15.sp)
-
-                TextField(
-                    value = grupo.value,
-                    onValueChange = {
-                        grupo.value = it
-                    },
-                    placeholder = {
-                        Text("Grupo")
-                    }
-                )
+                //*************
 
             }
-
             // Tercera parte: Botones
             Column(
-                modifier = Modifier.offset(x = 205.dp, y = 225.dp)
+                modifier = Modifier.offset(x = 205.dp, y = 270.dp)
             ) {
                 // Agregar Usuario
                 Box(
@@ -172,11 +173,68 @@ fun AgregarUsuario (navController: NavHostController) {
                     )
                 }
 
+            }
+            Column (
+                modifier = Modifier.offset(x = 215.dp, y = 100.dp)
+            ) {
+                Text(text = "Grupo",
+                    color = Color.White,
+                    fontSize = 15.sp)
 
+                dropDownMenu()
             }
 
         }
 
+    }
+
+}
+
+@Composable
+fun dropDownMenu(){
+
+    var expanded by remember{ mutableStateOf(false) }
+    val list = listOf("1","2","3","4")
+    var selectedItem by remember{ mutableStateOf("") }
+
+    var textFiledSize by remember{ mutableStateOf(Size.Zero)}
+
+    val icon = if (expanded){
+        Icons.Filled.KeyboardArrowUp
+    }else{
+        Icons.Filled.KeyboardArrowDown
+    }
+
+    OutlinedTextField(value = selectedItem,
+        onValueChange = {selectedItem = it},
+        modifier = Modifier
+            .background(color = Color.White)
+            .height(60.dp)
+            .onGloballyPositioned { coordinates ->
+                textFiledSize = coordinates.size.toSize()
+            },
+        readOnly = true,
+        //label = { Text(text = "Select Item") },
+
+        trailingIcon = {
+            Icon(icon, "", Modifier.clickable { expanded = !expanded })
+        }
+
+
+    )
+
+    DropdownMenu(
+        expanded = expanded,
+        onDismissRequest = {expanded = false},
+        modifier = Modifier
+            .width(with(LocalDensity.current){textFiledSize.width.toDp()})
+    ){
+        list.forEach { label ->
+            DropdownMenuItem(text = { Text(text = label) }, onClick = {
+                selectedItem = label
+                expanded = false
+            })
+        }
     }
 
 }
