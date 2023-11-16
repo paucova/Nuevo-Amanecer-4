@@ -24,16 +24,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+
+import kotlin.math.sqrt
 import com.example.appfinal.screens.home.noRippleClickable
 import kotlin.random.Random
 
 @Composable
-fun Colores (navController: NavHostController) {
+fun Colores(navController: NavHostController) {
     // Fondo
     val azulClaro = Color(173, 216, 230)
 
     // Variables
-    val images = remember { mutableStateOf(generateImages2()) }
+    val minDistanceBetweenCircles = 350 // Ajusta según tus necesidades
+    val images = remember { mutableStateOf(generateImages2(minDistanceBetweenCircles)) }
     val deletedImages = remember { mutableStateOf(mutableListOf<DraggableImage2>()) }
     val deletedImageCount = remember { mutableStateOf(0) }
     val colorObjetivo = remember { mutableStateOf(generateRandomColor(images.value)) } // Color que se debe eliminar
@@ -60,9 +63,7 @@ fun Colores (navController: NavHostController) {
         } else {
             // No quedan círculos visibles, genera nuevos círculos
             val randomImageCount = Random.nextInt(1, 11)
-            addNewImages2(images.value, randomImageCount)
-
-            // Selecciona un nuevo color objetivo de entre los círculos restantes
+            images.value = generateImages2(minDistanceBetweenCircles)
             selectNewColorObjective()
         }
     }
@@ -117,10 +118,9 @@ fun Colores (navController: NavHostController) {
                 }
             }
         } else {
+            // No quedan círculos visibles, genera nuevos círculos
             val randomImageCount = Random.nextInt(1, 11)
-            addNewImages2(images.value, randomImageCount)
-
-            // Selecciona un nuevo color objetivo de entre los círculos restantes
+            images.value = generateImages2(minDistanceBetweenCircles)
             selectNewColorObjective()
         }
     }
@@ -134,12 +134,22 @@ data class DraggableImage2(
     var isVisible: Boolean = true
 )
 
-fun addNewImages2(images: MutableList<DraggableImage2>, imageCount: Int) {
+fun addNewImages2(images: MutableList<DraggableImage2>, imageCount: Int, minDistance: Int) {
     images.clear()
 
     for (id in 1..imageCount) {
-        val xOffset = Random.nextInt(100, 1500)
-        val yOffset = Random.nextInt(100, 1000)
+        var validPosition = false
+        var newOffset: IntOffset
+
+        // Intenta generar una posición válida con una distancia mínima
+        do {
+            val xOffset = Random.nextInt(100, 1500)
+            val yOffset = Random.nextInt(100, 1000)
+            newOffset = IntOffset(xOffset, yOffset)
+
+            validPosition = images.none { it.offset.getDistanceTo(newOffset) < minDistance }
+        } while (!validPosition)
+
         val color = generateRandomColor()
         val radius = Random.nextInt(150, 200)
         val isVisible = true
@@ -147,7 +157,7 @@ fun addNewImages2(images: MutableList<DraggableImage2>, imageCount: Int) {
         images.add(
             DraggableImage2(
                 id = images.size + 1,
-                offset = IntOffset(xOffset, yOffset),
+                offset = newOffset,
                 color = color,
                 radius = radius,
                 isVisible = isVisible
@@ -174,19 +184,35 @@ fun DraggableImage2(image: DraggableImage2, colorObjetivo: Color, onDeleteClick:
     }
 }
 
-fun generateImages2(): MutableList<DraggableImage2> {
+fun IntOffset.getDistanceTo(other: IntOffset): Float {
+    val dx = this.x - other.x
+    val dy = this.y - other.y
+    return sqrt((dx * dx + dy * dy).toFloat())
+}
+
+fun generateImages2(minDistance: Int): MutableList<DraggableImage2> {
     val images = mutableListOf<DraggableImage2>()
 
     for (id in 1..10) {
-        val xOffset = Random.nextInt(100, 2000)
-        val yOffset = Random.nextInt(100, 1000)
+        var validPosition = false
+        var newOffset: IntOffset
+
+        // Intenta generar una posición válida con una distancia mínima
+        do {
+            val xOffset = Random.nextInt(100, 2000)
+            val yOffset = Random.nextInt(100, 1000)
+            newOffset = IntOffset(xOffset, yOffset)
+
+            validPosition = images.none { it.offset.getDistanceTo(newOffset) < minDistance }
+        } while (!validPosition)
+
         val color = generateRandomColor()
         val radius = Random.nextInt(150, 200)
 
         images.add(
             DraggableImage2(
                 id = id,
-                offset = IntOffset(xOffset, yOffset),
+                offset = newOffset,
                 color = color,
                 radius = radius
             )
