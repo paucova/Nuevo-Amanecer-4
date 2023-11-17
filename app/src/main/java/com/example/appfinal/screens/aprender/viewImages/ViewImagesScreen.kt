@@ -2,6 +2,7 @@ package com.example.appfinal.screens.aprender.viewImages
 
 import android.content.Context
 import android.graphics.BitmapFactory
+import android.provider.MediaStore.Images.Media.getBitmap
 import android.speech.tts.TextToSpeech
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -50,68 +51,76 @@ fun ViewImagesScreen(
 
     val imagenesFiltradas = tarjetasViewModel.images.value.filter { it.category == categoria }
 
-    Column(modifier = Modifier.background(color = azulClaro)) {
-        // botón para regresar
-        Button(onClick = {
-                navController.navigate("ColumnasScreen/${categoria}") {} },
-            modifier = Modifier.padding(8.dp),
-            contentPadding = PaddingValues(8.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = null,
-                tint = Color.White
-            )
-            Text(
-                text = "Regresar",
-                color = Color.White,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
-        // display de las tarjetas
-        numColumnas?.let { GridCells.Fixed(it) }?.let {
-            LazyVerticalGrid(
-                columns = it,
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = azulClaro)
+    ) {
+        Column{
+            // botón para regresar
+            Button(
+                onClick = {
+                    navController.navigate("ColumnasScreen/${categoria}") {}
+                },
+                modifier = Modifier.padding(8.dp),
                 contentPadding = PaddingValues(8.dp)
             ) {
-                items(imagenesFiltradas) { imagen ->
-                    Box(modifier = Modifier
-                        .fillMaxSize()
-                        .padding(
-                            horizontal = if (numColumnas > 1) 16.dp else 300.dp,
-                            vertical = 20.dp
-                        )
-                        .aspectRatio(1f)
-                    ) {
-                        val bitmap = categoria?.let {
-                            getBitmap(
-                                name = imagen.name,
-                                category = imagen.category,
-                                text = imagen.text,
-                                filepath = imagen.filePath,
-                                context = context,
+                Icon(
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = null,
+                    tint = Color.White
+                )
+                Text(
+                    text = "Regresar",
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
+            }
 
-                            )
-                        }
-                        if (bitmap != null) {
-                            Box(modifier = Modifier.fillMaxSize()
-                                .clickable { processTTS(context, imagen.text) }) {
-                                Image(
-                                    bitmap = bitmap,
-                                    contentDescription = "Tarjeta"
-                                )
-                            }
-                        }
-                        else if (imagen.filePath != -1) {
-                            Box(modifier = Modifier
+            // display de las tarjetas
+            numColumnas?.let { GridCells.Fixed(it) }?.let {
+                LazyVerticalGrid(
+                    columns = it,
+                    contentPadding = PaddingValues(8.dp)
+                ) {
+                    items(imagenesFiltradas) { imagen ->
+                        Box(
+                            modifier = Modifier
                                 .fillMaxSize()
-                                .clickable { processTTS(context, imagen.text) }) {
-                                Image(
-                                    painter = painterResource(id = imagen.filePath),
-                                    contentDescription = "Tarjeta",
-                                    modifier = Modifier.fillMaxSize()
+                                .padding(
+                                    horizontal = if (numColumnas > 1) 16.dp else 300.dp,
+                                    vertical = 20.dp
                                 )
+                                .aspectRatio(1f)
+                        ) {
+                            val bitmap = categoria?.let {
+                                getBitmap(
+                                    name = imagen.name,
+                                    category = imagen.category,
+                                    text = imagen.text,
+                                    filepath = imagen.filePath,
+                                    context = context,
+
+                                    )
+                            }
+                            if (bitmap != null) {
+                                Box(modifier = Modifier.fillMaxSize()
+                                    .clickable { processTTS(context, imagen.text) }) {
+                                    Image(
+                                        bitmap = bitmap,
+                                        contentDescription = "Tarjeta"
+                                    )
+                                }
+                            } else if (imagen.filePath != -1) {
+                                Box(modifier = Modifier
+                                    .fillMaxSize()
+                                    .clickable { processTTS(context, imagen.text) }) {
+                                    Image(
+                                        painter = painterResource(id = imagen.filePath),
+                                        contentDescription = "Tarjeta",
+                                        modifier = Modifier.fillMaxSize()
+                                    )
+                                }
                             }
                         }
                     }

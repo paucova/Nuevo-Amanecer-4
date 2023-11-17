@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -33,39 +34,42 @@ fun AprenderScreen (navController: NavHostController, tarjetasViewModel: Tarjeta
             .fillMaxSize()
             .background(color = azulClaro)
     ) {
-        // Botón de regreso a HomeScreen
-        Button(
-            onClick = {
-                navController.navigate("HomeScreen") {
-                    popUpTo("HomeScreen") {
-                        inclusive = true
-                    }
+        // Dentro de la misma página
+        Column {
+            // Boton de regreso a HomeScreen
+            Row {
+                Button(
+                    onClick = {
+                        navController.navigate("HomeScreen") {
+                            popUpTo("HomeScreen") {
+                                inclusive = true
+                            }
+                        }
+                    },
+                    modifier = Modifier
+                        .padding(8.dp),
+                    contentPadding = PaddingValues(8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = null,
+                        tint = Color.White
+                    )
+
+                    Text(
+                        text = "Regresar",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold
+                    )
                 }
-            },
-            modifier = Modifier
-                .padding(8.dp),
-            contentPadding = PaddingValues(8.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = null,
-                tint = Color.White
-            )
+            }
 
-            Text(
-                text = "Regresar",
-                color = Color.White,
-                fontWeight = FontWeight.Bold
-            )
-        }
+            // Categorías
+            Row {
+                // Llamamos a la función que crea las tarjetas de selección de categorías
+                ViewCategoriesScreen(navController = navController, tarjetasViewModel = tarjetasViewModel)
+            }
 
-        Column (
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            // llamamos a la función que crea las tarjetas de selección de categorías
-            ViewCategoriesScreen(navController = navController, tarjetasViewModel = tarjetasViewModel)
         }
 
     }
