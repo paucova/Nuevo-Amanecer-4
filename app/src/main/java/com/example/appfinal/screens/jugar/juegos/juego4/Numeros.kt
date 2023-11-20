@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.example.appfinal.screens.home.noRippleClickable
 import kotlin.math.pow
 import kotlin.math.sqrt
 import kotlin.random.Random
@@ -175,7 +176,7 @@ fun DraggableImage3(image: DraggableImage3, onDeleteClick: () -> Unit) {
             .size(image.radius.dp)
             .fillMaxSize()
             .background(color = image.color, shape = CircleShape)
-            .clickable {
+            .noRippleClickable {
                 image.isVisible = !image.isVisible
                 onDeleteClick()
             }
@@ -185,7 +186,7 @@ fun DraggableImage3(image: DraggableImage3, onDeleteClick: () -> Unit) {
             text = image.number.toString(),
             color = Color.White,
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
+            fontSize = 100.sp,
             modifier = Modifier.align(Alignment.Center)
         )
     }
