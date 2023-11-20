@@ -94,7 +94,6 @@ fun Juego3(navController: NavHostController) {
                     Drag()
                 }
         }
-
     }
 }
 
