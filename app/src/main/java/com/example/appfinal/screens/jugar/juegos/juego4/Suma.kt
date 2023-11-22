@@ -206,6 +206,9 @@ fun generateQuestion(): Question {
     val num1 = (1..10).random()
     val num2 = (1..10).random()
     val correctAnswer = num1 + num2
-    val wrongAnswer = (1..10).random()
+    var wrongAnswer = (1..10).random()
+    if (correctAnswer == wrongAnswer) {
+        wrongAnswer += 1
+    }
     return Question(num1, num2, correctAnswer, wrongAnswer)
 }
