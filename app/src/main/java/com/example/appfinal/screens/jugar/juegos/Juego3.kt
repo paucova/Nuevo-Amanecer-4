@@ -58,41 +58,48 @@ fun Juego3(navController: NavHostController) {
         // Botón de regreso a HomeScreen
 
 
-        Column (
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Button(
-                onClick = {
-                    navController.navigate("JugarScreen") {
-                        popUpTo("JugarScreen") {
-                            inclusive = true
+        Row {
+            Column {
+                Button(
+                    onClick = {
+                        navController.navigate("JugarScreen") {
+                            popUpTo("JugarScreen") {
+                                inclusive = true
+                            }
                         }
-                    }
-                },
-                modifier = Modifier
-                    .padding(8.dp),
-                contentPadding = PaddingValues(8.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ArrowBack,
-                    contentDescription = null,
-                    tint = Color.White
-                )
+                    },
+                    modifier = Modifier
+                        .padding(8.dp),
+                    contentPadding = PaddingValues(8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = null,
+                        tint = Color.White
+                    )
 
-                Text(
-                    text = "Regresar",
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold)
+                    Text(
+                        text = "Regresar",
+                        color = Color.White,
+                        fontWeight = FontWeight.Bold)
+                }
             }
+
+            Column (
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
                 Surface(
-                    modifier = Modifier.size(2000.dp, 1500.dp)
+                    modifier = Modifier
+                        .size(2000.dp, 1500.dp)
                         .background(color = azulClaro),
                     color = MaterialTheme.colorScheme.background
                 ) {
                     Drag()
                 }
+            }
+
         }
     }
 }
@@ -132,7 +139,9 @@ private fun Drag() {
         coloresSeleccionados.shuffled().take(3)
     }
 
-    Box(modifier = Modifier.fillMaxSize().background(color = azulClaro)) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .background(color = azulClaro)) {
         var color1OffsetX by remember { mutableStateOf(0f) }
         var color1OffsetY by remember { mutableStateOf(0f) }
 
@@ -372,7 +381,8 @@ private fun Drag() {
         ){
             Image(painter = painterResource(id = R.drawable.ganaste),
                 contentDescription = null,
-                modifier = Modifier.size(800.dp)
+                modifier = Modifier
+                    .size(800.dp)
                     .align(Alignment.Center)
             )
         }
